@@ -42,17 +42,16 @@
  */
 
 class DogBreed {
-  // TODO: Implement the constructor
   // It should accept a data object and set all the properties
   constructor(data) {
-    // TODO: Set properties from data
-    // this.id = ...
-    // this.name = ...
-    // this.description = ...
-    // this.hypoallergenic = ...
-    // this.life = ...
-    // this.maleWeight = ...
-    // this.femaleWeight = ...
+    this.id = data.id;
+    this.type = data.type;
+    this.name = data.name;
+    this.description = data.description;
+    this.hypoallergenic = data.hypoallergenic;
+    this.life = data.life;
+    this.maleWeight = data.maleWeight;
+    this.femaleWeight = data.femaleWeight;
   }
 
   /**
@@ -60,8 +59,8 @@ class DogBreed {
    * @returns {string} e.g., "10-14 years"
    */
   getLifeSpan() {
-    // TODO: Implement this method
     // Should return a string in format "X-Y years"
+    return `${this.life.min}-${this.life.max} years`;
   }
 
   /**
@@ -69,8 +68,8 @@ class DogBreed {
    * @returns {string} e.g., "25-35 kg"
    */
   getMaleWeight() {
-    // TODO: Implement this method
     // Should return a string in format "X-Y kg"
+    return `${this.maleWeight.min}-${this.maleWeight.max} kg`;
   }
 
   /**
@@ -78,8 +77,8 @@ class DogBreed {
    * @returns {string} e.g., "20-30 kg"
    */
   getFemaleWeight() {
-    // TODO: Implement this method
     // Should return a string in format "X-Y kg"
+    return `${this.femaleWeight.min}-${this.femaleWeight.max} kg`;
   }
 
   /**
@@ -87,8 +86,8 @@ class DogBreed {
    * @returns {string} "Yes" or "No"
    */
   isHypoallergenic() {
-    // TODO: Implement this method
     // Should return "Yes" if hypoallergenic, "No" otherwise
+    return this.hypoallergenic ? "Yes" : "No";
   }
 
   /**
@@ -96,9 +95,9 @@ class DogBreed {
    * @returns {string} Full description including name, description, and stats
    */
   describe() {
-    // TODO: Implement this method
     // Should return a string like:
     // "Labrador Retriever: A friendly and outgoing breed. Lives 10-14 years. Hypoallergenic: No"
+    return `${this.name}: ${this.description}. Lives ${this.getLifeSpan()}. Hypoallergenic: ${this.isHypoallergenic()}`;
   }
 
   /**
@@ -111,6 +110,16 @@ class DogBreed {
     // The API returns data in this format:
     // { id: "...", type: "breed", attributes: { name: "...", ... } }
     // You need to transform it to the format the constructor expects
+    const data = {
+      id: apiData.id,
+      name: apiData.attributes.name,
+      description: apiData.attributes.description,
+      hypoallergenic: apiData.attributes.hypoallergenic,
+      life: apiData.attributes.life,
+      maleWeight: apiData.attributes.male_weight,
+      femaleWeight: apiData.attributes.female_weight
+     };
+    return new DogBreed(data);
   }
 }
 

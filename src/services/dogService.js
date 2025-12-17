@@ -37,9 +37,16 @@ const API_BASE_URL = 'https://dogapi.dog/api/v2';
  * 4. Parse and return the data array from the response
  */
 export async function fetchBreeds() {
-  // TODO: Implement this function
   // Use fetch() with async/await
   // Remember to handle errors!
+  const response = await fetch(API_BASE_URL + '/breeds');
+
+  if(!response.ok) {
+    throw new Error("Failed to fetch breeds");
+   }
+
+  const json = await response.json();
+  return json.data;
 }
 
 /**
@@ -61,8 +68,18 @@ export async function fetchBreeds() {
  * 4. Parse and return the data object from the response
  */
 export async function fetchBreedById(id) {
-  // TODO: Implement this function
   // Handle 404 separately from other errors
+  const response2 = await fetch(API_BASE_URL + '/breeds/' + id);
+
+  if(response2.status === 404) {
+    throw new Error("Breed not found");
+   } 
+   if(!response2.ok) {
+    throw new Error("Failed to fetch breed");
+   }
+
+  const json = await response2.json();
+  return json.data;
 }
 
 /**
@@ -89,6 +106,14 @@ export async function fetchBreedById(id) {
 export async function fetchFacts(limit = 1) {
   // TODO: Implement this function
   // Don't forget to add the limit query parameter!
+  const response3 = await fetch(API_BASE_URL + '/facts?limit=' + limit);
+
+  if(!response3.ok) {
+    throw new Error("Failed to fetch facts");
+  }
+
+  const json = await response3.json();
+  return json.data;
 }
 
 /**

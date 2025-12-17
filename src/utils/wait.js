@@ -21,9 +21,12 @@
  * Hint: Use setTimeout inside a new Promise
  */
 export function wait(ms) {
-  // TODO: Implement this function
   // Return a new Promise that resolves after ms milliseconds
   // Use setTimeout to create the delay
+  const firstPromise = new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+  return firstPromise;
 }
 
 /**
@@ -48,6 +51,10 @@ export async function delayedAction(ms) {
   // 2. Use await with the wait() function
   // 3. Log "Done!"
   // 4. Return ms
+  console.log("Starting...");
+  await wait(ms);
+  console.log("Done!");
+  return ms; 
 }
 
 /**
@@ -65,9 +72,23 @@ export async function delayedAction(ms) {
  *   const result = await retryWithDelay(fetchData, 3, 1000);
  */
 export async function retryWithDelay(asyncFn, maxRetries = 3, delayMs = 1000) {
-  // TODO (BONUS): Implement this function
   // 1. Try to execute asyncFn
   // 2. If it fails, wait for delayMs then retry
   // 3. Repeat up to maxRetries times
   // 4. If all retries fail, throw the last error
+
+  let lastError;
+
+  for (let index = 0; index < maxRetries; index++) {
+    console.log("test");
+    try {
+      return await asyncFn();
+    } catch(e) {
+        await wait(delayMs);
+        lastError = e;
+        console.log(lastError);
+    }
+  }
+
+  throw lastError;
 }
